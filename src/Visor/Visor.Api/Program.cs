@@ -2,11 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Visor.Api
 {
@@ -21,10 +16,6 @@ namespace Visor.Api
             Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
-                //configHost.SetBasePath(Directory.GetCurrentDirectory());
-                //configHost.AddJsonFile("hostsettings.json", optional: true);
-                //configHost.AddEnvironmentVariables(prefix: "PREFIX_");
-                //configHost.AddCommandLine(args);
                 config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath);
                 config.AddJsonFile("AppIdentitySettings.json", optional: false, reloadOnChange: true);
                 config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
