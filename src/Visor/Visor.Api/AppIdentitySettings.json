@@ -1,0 +1,71 @@
+{
+  "AppIdentitySettings": {
+    "User": {
+      "RequireUniqueEmail": true
+    },
+    "Password": {
+      "RequiredLength": 6,
+      "RequireLowercase": true,
+      "RequireUppercase": true,
+      "RequireDigit": true,
+      "RequireNonAlphanumeric": false
+    },
+    "Lockout": {
+      "AllowedForNewUsers": true,
+      "DefaultLockoutTimeSpanInMins": 30,
+      "MaxFailedAccessAttempts": 5
+    },
+    "SignIn": {
+      "RequireConfirmedEmail": true,
+      "RequireConfirmedAccount": true
+
+    }
+  },
+  "IdentityServer": {
+    "IssuerUri": "urn:sso.shigar.co.uk",
+    "Clients": [
+      {
+        "Enabled": true,
+        "ClientId": "react",
+        "ClientName": "react dumps",
+        "ClientSecrets": [ { "Value": "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b" } ],
+        "AllowedGrantTypes": [ "authorization_code" ],
+        "AllowedScopes": [ "openid", "profile", "users", "roles", "api", "forms", "media" ],
+        "RedirectUris": [ "http://react-dumps/authentication/login-callback", "http://localhost:3000/silent-renew.html" ],
+        "PostLogoutRedirectUris": [ "http://react-dumps/authentication/logout-callback" ],
+        "RequireConsent": false,
+        "RequirePkce": true,
+        "RequireClientSecret": false,
+        "AlwaysIncludeUserClaimsInIdToken": true
+      },
+      {
+        "Enabled": true,
+        "ClientId": "react2",
+        "ClientName": "react learning",
+        "ClientSecrets": [ { "Value": "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b" } ],
+        "AllowedGrantTypes": [ "authorization_code" ],
+        "AllowedScopes": [ "openid", "profile", "users", "roles", "api", "forms", "media" ],
+        "RedirectUris": [ "http://localhost:3000/authentication/login-callback", "http://localhost:3000/silent-renew.html" ],
+        "PostLogoutRedirectUris": [ "http://localhost:3000/authentication/logout-callback" ],
+        "RequireConsent": false,
+        "RequirePkce": true,
+        "RequireClientSecret": false,
+        "AlwaysIncludeUserClaimsInIdToken": true
+      },
+      {
+        "Enabled": true,
+        "ClientId": "mvc",
+        "ClientName": "mvc client ",
+        "ClientSecrets": [ { "Value": "35224d0d3465d74e855f8d69a136e79c744ea35a675d3393360a327cbf6359a2" } ],
+        "AllowedGrantTypes": [ "authorization_code" ],
+        "AllowedScopes": [ "openid", "profile", "users"],
+        "RedirectUris": [ "http://localhost:5002/signin-oidc" ],
+        "PostLogoutRedirectUris": [ "http://localhost:5002/signout-callback-oidc" ],
+        "RequireConsent": false,
+        "RequirePkce": true,
+        "RequireClientSecret": false,
+        "AlwaysIncludeUserClaimsInIdToken": true
+      }
+    ]
+  }
+}

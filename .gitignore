@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/Visor/Visor.Api/Secrets.Development.json
+/src/Visor/Visor.Api/Secrets.Production.json
+/src/Visor/Visor.Api/Secrets.QA.json
