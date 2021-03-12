@@ -1,13 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Visor.Data.Identity;
 
 namespace Visor.Api
 {
@@ -23,15 +18,18 @@ namespace Visor.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //var settingsSection = Configuration.GetSection("AppIdentitySettings");
+            //// Inject AppIdentitySettings so that others can use too
+            //services.Configure<ApplicationIdentitySettings>(settingsSection);
 
-            services.AddDbContext<IdentityContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("users"))
+            //services.AddDbContext<IdentityContext>(options =>
+            //    options.UseMySQL(Configuration.GetConnectionString("users"))
 
-            );
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            //);
+            //services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<IdentityContext>();
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<IdentityContext>();
             services.AddControllersWithViews();
         }
 

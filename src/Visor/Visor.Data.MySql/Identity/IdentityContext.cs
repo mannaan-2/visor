@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Visor.Data.Identity
+namespace Visor.Data.MySql.Identity
 {
     public class IdentityContext : IdentityDbContext
     {

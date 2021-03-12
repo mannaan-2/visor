@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.EntityFrameworkCore.Metadata;
 
-namespace Visor.Data.Identity.Migrations
+namespace Visor.Data.MySql.Identity.Migrations
 {
     public partial class InitialCreate : Migration
     {

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Api", "Visor.Api\Visor.Api.csproj", "{2EDB923B-858B-4106-BA0D-1DB5E12C2DF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Data", "Visor.Data\Visor.Data.csproj", "{980186D0-52FF-4DA8-81FB-42E670AA538F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Data.MySql", "Visor.Data.MySql\Visor.Data.MySql.csproj", "{980186D0-52FF-4DA8-81FB-42E670AA538F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
