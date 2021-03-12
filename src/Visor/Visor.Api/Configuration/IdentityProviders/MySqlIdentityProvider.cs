@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Visor.Api.Configuration.Pocos;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Identity;
+using Visor.Data.MySql.Identity.Entities;
+using Visor.Data.MySql;
 
 namespace Visor.Api.Configuration
 {
@@ -65,7 +67,7 @@ namespace Visor.Api.Configuration
             {
                 identityContext.Database.Migrate();
             }
-
+            services.AddHttpContextAccessor();
             //// Adds IdentityServer
             //services.AddIdentityServer()
             //    .AddDeveloperSigningCredential()
@@ -96,6 +98,7 @@ namespace Visor.Api.Configuration
 
             /**DONT**/
             //IdentityModelEventSource.ShowPII = true;
+            services.AddTenants(connectionString);
             return services;
         }
     }

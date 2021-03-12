@@ -19,7 +19,7 @@ namespace Visor.Data.MySql.Identity
         {
             var builder = new DbContextOptionsBuilder<IdentityContext>();
             builder.UseMySQL(_connectionString);
-            return new IdentityContext(builder.Options);
+            return new IdentityContext(builder.Options,null);
         }
     }
 }
