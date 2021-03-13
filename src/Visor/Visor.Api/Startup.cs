@@ -36,14 +36,7 @@ namespace Visor.Api
                 });
             });
             services.AddMySqlIdentityProvider(Configuration, "users");
-            //var settingsSection = Configuration.GetSection("AppIdentitySettings");
-            //// Inject AppIdentitySettings so that others can use too
-            //services.Configure<ApplicationIdentitySettings>(settingsSection);
 
-            //services.AddDbContext<IdentityContext>(options =>
-            //    options.UseMySQL(Configuration.GetConnectionString("users"))
-
-            //);
             //services.AddDatabaseDeveloperPageExceptionFilter();
 
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -72,16 +65,7 @@ namespace Visor.Api
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.InitTenantResolution()
-              .Then<AttemptResolutionByHost>()
-              .Then<AttemptResolutionByQueryString>()
-              .Then<AttemptResolutionByReferrer>()
-              .Then<AttemptResolutionByCookie>()
-              .Then<VerifyTenantResolution, TenantVerificationOptions>(new TenantVerificationOptions(new List<string>()
-              {
-                   "/.well-known/openid-configuration",
-                   "/.well-known/openid-configuration/jwks"
-              }));
+            app.UseMySqlIdentityProvider();
             app.UseAuthentication();
             app.UseAuthorization();
 

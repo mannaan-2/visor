@@ -12,6 +12,7 @@ using Visor.Api.Configuration.Pocos;
 using Microsoft.AspNetCore.Identity;
 using Visor.Data.MySql.Identity.Entities;
 using Visor.Data.MySql;
+using Microsoft.AspNetCore.Builder;
 
 namespace Visor.Api.Configuration
 {
@@ -100,6 +101,12 @@ namespace Visor.Api.Configuration
 
 
             return services;
+        }
+        public static IApplicationBuilder UseMySqlIdentityProvider(
+          this IApplicationBuilder app)
+        {
+            app.UseTenants();
+            return app;
         }
     }
 }

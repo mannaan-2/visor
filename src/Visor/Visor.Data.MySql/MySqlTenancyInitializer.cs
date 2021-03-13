@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shigar.Core.Tenants.Services;
+using System.Collections.Generic;
 using System.Linq;
 using Visor.Data.MySql.Abstractions;
 using Visor.Data.MySql.Identity;
@@ -22,17 +23,6 @@ namespace Visor.Data.MySql
 
         public static void AddTenants(this IServiceCollection services)
         {
-            
-            //pipeline processors
-            //services.AddTransient<InitializeTenantResolutionProcessor>();
-            //services.AddTransient<AttemptResolutionByHost>();
-            //services.AddTransient<AttemptResolutionByQueryString>();
-            //services.AddTransient<AttemptResolutionByReferrer>();
-            //services.AddTransient<AttemptResolutionByCookie>();
-
-
-            //services.AddTransient<VerifyTenantResolution>();
-
             services.AddTransient<ITenantRepository, TenantRepository>();
             services.AddTransient<ITenantContext, TenantContext>();
         }
@@ -44,6 +34,21 @@ namespace Visor.Data.MySql
             var tenantRepository = serviceProvider.GetService<ITenantRepository>();
             var defaultTenant = AddTenantToDb("local", "Default tenant", "For dev", "localhost", tenantRepository);
 
+        }
+        public static IApplicationBuilder UseTenants(
+           this IApplicationBuilder app)
+        {
+            app.InitTenantResolution()
+             .Then<AttemptResolutionByHost>()
+             .Then<AttemptResolutionByQueryString>()
+             .Then<AttemptResolutionByReferrer>()
+             .Then<AttemptResolutionByCookie>()
+             .Then<VerifyTenantResolution, TenantVerificationOptions>(new TenantVerificationOptions(new List<string>()
+             {
+                   "/.well-known/openid-configuration",
+                   "/.well-known/openid-configuration/jwks"
+             }));
+            return app;
         }
         private static ITenant AddTenantToDb(string key, string name, string desciption, string host, ITenantRepository tenantRepository)
         {
