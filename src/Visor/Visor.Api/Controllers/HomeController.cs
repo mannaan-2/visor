@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Visor.Api.Models;
 
 namespace Visor.Api.Controllers
 {
+    [Route("[controller]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,7 +19,7 @@ namespace Visor.Api.Controllers
         {
             _logger = logger;
         }
-
+        [Route("[controller]/index")]
         public IActionResult Index()
         {
             return View();

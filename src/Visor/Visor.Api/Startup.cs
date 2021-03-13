@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using Visor.Api.Configuration;
+using Visor.Api.Configuration.Extensions;
 using Visor.Data.MySql;
 using Visor.Data.MySql.Abstractions;
 using Visor.Data.MySql.Tenancy.Pipelines;
@@ -41,8 +42,11 @@ namespace Visor.Api
 
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<IdentityContext>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(o=>{
+                o.UseGeneralRoutePrefix("v{version:apiVersion}"); // o.UseGeneralRoutePrefix("api/v{version:apiVersion}");
+            });
             services.AddRazorPages();
+            services.AddApiVersioning();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
         }
 
