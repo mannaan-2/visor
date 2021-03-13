@@ -4,29 +4,25 @@ using Visor.Data.MySql.Abstractions;
 
 namespace Visor.Data.MySql.Tenancy.Pipelines
 {
-    public class AttemptResolutionByHost : IMiddleware
+    public class AttemptResolutionByHost 
     {
-        private readonly ITenantRepository _tenantRepository;
-        private readonly ITenantContext _tenantContext;
-
-        public AttemptResolutionByHost(ITenantRepository tenantRepository, ITenantContext tenantContext)
+        private readonly RequestDelegate _next;
+        public AttemptResolutionByHost( RequestDelegate next)
         {
-            _tenantRepository = tenantRepository;
-            _tenantContext = tenantContext;
-
+            _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
-            if (_tenantContext.Resolved)
-                await next(context);
+            if (tenantContext.Resolved)
+                await _next(context);
             var host = context.Request.Host.Host;
-            var tenant = _tenantRepository.FindByHostName(host);
+            var tenant = tenantRepository.FindByHostName(host);
             if (tenant != null && tenant.Active)
             {
-                _tenantContext.Set(tenant.Key);
+                tenantContext.Set(tenant.Key);
             }
-            await next(context);
+            await _next(context);
         }
     }
 }

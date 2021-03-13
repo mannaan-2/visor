@@ -20,6 +20,22 @@ namespace Visor.Data.MySql.Identity
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>(entity => entity.Property(m => m.Id).HasMaxLength(85));
+            builder.Entity<ApplicationRole>(entity => entity.Property(m => m.Id).HasMaxLength(85));
+
+            builder.Entity<ApplicationUserClaim>(entity => entity.Property(m => m.Id).HasMaxLength(85));
+            builder.Entity<ApplicationRoleClaim>(entity => entity.Property(m => m.Id).HasMaxLength(85));
+
+            builder.Entity<ApplicationUserLogin>(entity => entity.Property(m => m.UserId).HasMaxLength(85));
+            builder.Entity<ApplicationUserLogin>(entity => entity.Property(m => m.ProviderKey).HasMaxLength(85));
+            builder.Entity<ApplicationUserLogin>(entity => entity.Property(m => m.LoginProvider).HasMaxLength(85));
+
+            builder.Entity<ApplicationUserRole>(entity => entity.Property(m => m.UserId).HasMaxLength(85));
+            builder.Entity<ApplicationUserRole>(entity => entity.Property(m => m.RoleId).HasMaxLength(85));
+
+            builder.Entity<ApplicationUserToken>(entity => entity.Property(m => m.UserId).HasMaxLength(85));
+            builder.Entity<ApplicationUserToken>(entity => entity.Property(m => m.Name).HasMaxLength(85));
+            builder.Entity<ApplicationUserToken>(entity => entity.Property(m => m.LoginProvider).HasMaxLength(85));
             base.OnModelCreating(builder);
         }
     }

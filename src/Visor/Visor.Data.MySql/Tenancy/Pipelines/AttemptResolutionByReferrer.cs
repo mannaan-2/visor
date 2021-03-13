@@ -5,33 +5,30 @@ using Visor.Data.MySql.Abstractions;
 
 namespace Visor.Data.MySql.Tenancy.Pipelines
 {
-    public class AttemptResolutionByReferrer : IMiddleware
+    public class AttemptResolutionByReferrer 
     {
-        private readonly ITenantRepository _tenantRepository;
-        private readonly ITenantContext _tenantContext;
+        private readonly RequestDelegate _next;
 
-        public AttemptResolutionByReferrer(ITenantRepository tenantRepository, ITenantContext tenantContext)
+        public AttemptResolutionByReferrer( RequestDelegate next)
         {
-            _tenantRepository = tenantRepository;
-            _tenantContext = tenantContext;
-
+            _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
-            if (_tenantContext.Resolved)
-                await next(context);
+            if (tenantContext.Resolved)
+                await _next(context);
             var referrer = context.Request.Headers["Referer"].ToString();
             if (!string.IsNullOrEmpty(referrer))
             {
                 var uriReferer = new Uri(referrer);
-                var tenant = _tenantRepository.FindByHostName(uriReferer.Host);
+                var tenant = tenantRepository.FindByHostName(uriReferer.Host);
                 if (tenant != null && tenant.Active)
                 {
-                    _tenantContext.Set(tenant.Key);
+                    tenantContext.Set(tenant.Key);
                 }
             }
-            await next(context);
+            await _next(context);
         }
     }
 }

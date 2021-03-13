@@ -20,25 +20,23 @@ namespace Visor.Data.MySql
             return new TenantResolutionBuilder(builder);
         }
 
-        public static void AddTenants(this IServiceCollection services, string connectionString)
+        public static void AddTenants(this IServiceCollection services)
         {
             
             //pipeline processors
-            services.AddTransient<InitializeTenantResolutionProcessor>();
-            services.AddTransient<AttemptResolutionByHost>();
-            services.AddTransient<AttemptResolutionByQueryString>();
-            services.AddTransient<AttemptResolutionByReferrer>();
-            services.AddTransient<AttemptResolutionByCookie>();
+            //services.AddTransient<InitializeTenantResolutionProcessor>();
+            //services.AddTransient<AttemptResolutionByHost>();
+            //services.AddTransient<AttemptResolutionByQueryString>();
+            //services.AddTransient<AttemptResolutionByReferrer>();
+            //services.AddTransient<AttemptResolutionByCookie>();
 
 
-            services.AddTransient<VerifyTenantResolution>();
+            //services.AddTransient<VerifyTenantResolution>();
 
             services.AddTransient<ITenantRepository, TenantRepository>();
             services.AddTransient<ITenantContext, TenantContext>();
-
-            services.InitializeDefaultTenant(connectionString);
         }
-        private static void InitializeDefaultTenant(this IServiceCollection services, string connectionString)
+        public static void InitializeDefaultTenant(this IServiceCollection services, string connectionString)
         {
             //  DesignTimeDbContextFactory.SetConnectionString(connectionString);
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using Visor.Api.Configuration;
 using Visor.Data.MySql;
 using Visor.Data.MySql.Abstractions;
 using Visor.Data.MySql.Tenancy.Pipelines;
@@ -34,6 +35,7 @@ namespace Visor.Api
                            .AllowAnyHeader();
                 });
             });
+            services.AddMySqlIdentityProvider(Configuration, "users");
             //var settingsSection = Configuration.GetSection("AppIdentitySettings");
             //// Inject AppIdentitySettings so that others can use too
             //services.Configure<ApplicationIdentitySettings>(settingsSection);
@@ -47,6 +49,7 @@ namespace Visor.Api
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<IdentityContext>();
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
         }
 
@@ -70,13 +73,14 @@ namespace Visor.Api
 
             app.UseRouting();
             app.InitTenantResolution()
+              .Then<AttemptResolutionByHost>()
               .Then<AttemptResolutionByQueryString>()
               .Then<AttemptResolutionByReferrer>()
               .Then<AttemptResolutionByCookie>()
               .Then<VerifyTenantResolution, TenantVerificationOptions>(new TenantVerificationOptions(new List<string>()
               {
-                    "/.well-known/openid-configuration",
-                    "/.well-known/openid-configuration/jwks"
+                   "/.well-known/openid-configuration",
+                   "/.well-known/openid-configuration/jwks"
               }));
             app.UseAuthentication();
             app.UseAuthorization();
@@ -86,6 +90,7 @@ namespace Visor.Api
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
         }
