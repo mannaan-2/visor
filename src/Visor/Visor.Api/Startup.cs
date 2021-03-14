@@ -48,6 +48,7 @@ namespace Visor.Api
             services.AddRazorPages();
             services.AddApiVersioning();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+            services.AddOpenApi();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,7 +73,7 @@ namespace Visor.Api
             app.UseMySqlIdentityProvider();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseOpenApi();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
