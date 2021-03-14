@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Identity;
 using Visor.Data.MySql.Identity.Entities;
 using Visor.Data.MySql;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Visor.Data.MySql.Constants;
+using IdentityServer4;
 
 namespace Visor.Api.Configuration
 {
@@ -69,20 +73,20 @@ namespace Visor.Api.Configuration
             }
             services.InitializeDefaultTenant(connectionString);
             //// Adds IdentityServer
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()
-            //    .AddInMemoryIdentityResources(Config.Ids)
-            //    .AddInMemoryApiResources(Config.Apis)
-            //    .AddInMemoryClients(configuration.GetSection("IdentityServer:Clients"))
-            //    .AddAspNetIdentity<ApplicationUser>()
-            //    .AddProfileService<IdentityProfileService>();
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryIdentityResources(IdentityServerConfig.Ids)
+                .AddInMemoryApiResources(IdentityServerConfig.Apis)
+                .AddInMemoryClients(configuration.GetSection("IdentityServer:Clients"))
+                .AddAspNetIdentity<ApplicationUser>();
+                //.AddProfileService<IdentityProfileService>();
 
-            //services.Configure<CookieAuthenticationOptions>(IdentityServerConstants.DefaultCookieAuthenticationScheme, options =>
-            //{
-            //    options.Cookie.SameSite = SameSiteMode.None;
-            //    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            //    options.Cookie.IsEssential = true;
-            //});
+            services.Configure<CookieAuthenticationOptions>(IdentityServerConstants.DefaultCookieAuthenticationScheme, options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.IsEssential = true;
+            });
             //services.ConfigureApplicationCookie(options =>
             //{
             //    options.LoginPath = $"/Identity/Account/Login";

@@ -49,6 +49,25 @@ namespace Visor.Api
             services.AddApiVersioning();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.AddOpenApi();
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ww",Microsoft.AspNetCore.Authorization.AuthorizationPolicy ;
+            //});
+            //services.AddAuthentication("Bearer")
+            //        .AddJwtBearer("Bearer", options =>
+            //        {
+            //          options.Authority = "https://localhost:44382/";
+            //          options.RequireHttpsMetadata = false;
+
+            //          options.Audience = "forms";
+            //        })
+            //        .AddJwtBearer("Bearer2", options =>
+            //        {
+            //            options.Authority = "https://localhost:44382/";
+            //            options.RequireHttpsMetadata = false;
+
+            //            options.Audience = "forms2";
+            //        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,7 +92,9 @@ namespace Visor.Api
             app.UseMySqlIdentityProvider();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseIdentityServer();
             app.UseOpenApi();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

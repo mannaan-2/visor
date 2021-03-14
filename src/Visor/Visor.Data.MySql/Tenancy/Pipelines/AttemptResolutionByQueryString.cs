@@ -18,7 +18,7 @@ namespace Visor.Data.MySql.Tenancy.Pipelines
         {
             if (tenantContext.Resolved)
                 await _next(context);
-            var key = context.Request.Query[Constants.TenantQueryStringParam].ToString();
+            var key = context.Request.Query[Abstractions.Constants.TenantQueryStringParam].ToString();
             var tenant = tenantRepository.FindByKey(key);
             if (tenant != null && tenant.Active)
             {

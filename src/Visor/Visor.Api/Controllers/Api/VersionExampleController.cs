@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,7 @@ namespace Visor.Api.Controllers.Api
         /// </summary>
         /// <param name="id"></param>     
         [HttpGet("user/{id}")]
+        [Authorize(policy:"Bearer")]
         public void UserInfo(string id)
         {
         }

@@ -17,7 +17,7 @@ namespace Visor.Data.MySql.Tenancy.Pipelines
         {
             if (tenantContext.Resolved)
                 await _next(context);
-            var key = context.Request.Cookies[Constants.TenantCookie];
+            var key = context.Request.Cookies[Abstractions.Constants.TenantCookie];
             if (!string.IsNullOrEmpty(key))
             {
                 var tenant = tenantRepository.FindByKey(key);
