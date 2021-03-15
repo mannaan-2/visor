@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -41,6 +44,34 @@ namespace Visor.Api.Configuration.Extensions
                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        ClientCredentials = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("https://localhost:44382/connect/authorize"),
+                            TokenUrl = new Uri("https://localhost:44382/connect/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {"authenticated-user","Authenticated users" },
+                                {"anon-user","Anonymous users" }
+                            },
+                        },
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("https://localhost:44382/connect/authorize"),
+                            TokenUrl = new Uri("https://localhost:44382/connect/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {"authenticated-user","Authenticated users" },
+                                {"anon-user","Anonymous users" }
+                            },
+                        }
+                    }
+                }) ;
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
            
             return services;
@@ -53,12 +84,48 @@ namespace Visor.Api.Configuration.Extensions
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUI(options =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Visor Auth API");
-                c.RoutePrefix = string.Empty;
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Visor Auth API");
+                //options.RoutePrefix = string.Empty;
+                options.OAuthClientId("swagger");
+                options.OAuthAppName("Swagger UI client");
+                options.OAuthUsePkce();
+                //options.OAuthClientSecret("secret");
+                
             });
             return app;
+        }
+    }
+
+    public class AuthorizeCheckOperationFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            var hasAuthorize =
+              context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any()
+              || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any();
+
+            if (hasAuthorize)
+            {
+                operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
+                operation.Responses.Add("403", new OpenApiResponse { Description = "Forbidden" });
+
+                operation.Security = new List<OpenApiSecurityRequirement>
+            {
+                new OpenApiSecurityRequirement
+                {
+                    [
+                        new OpenApiSecurityScheme {Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "oauth2"}
+                        }
+                    ] = new[] {"users"}
+                }
+            };
+
+            }
         }
     }
 }

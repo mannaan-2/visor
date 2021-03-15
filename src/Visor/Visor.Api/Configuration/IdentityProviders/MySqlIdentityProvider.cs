@@ -76,8 +76,10 @@ namespace Visor.Api.Configuration
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(IdentityServerConfig.Ids)
+                .AddInMemoryApiScopes(IdentityServerConfig.GetApiScopes())
                 .AddInMemoryApiResources(IdentityServerConfig.Apis)
-                .AddInMemoryClients(configuration.GetSection("IdentityServer:Clients"))
+                .AddInMemoryClients(IdentityServerConfig.swaggerClient)
+                //.AddInMemoryClients(configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
                 //.AddProfileService<IdentityProfileService>();
 

@@ -94,7 +94,7 @@ namespace Visor.Api.Controllers.Api
         /// </summary>
         /// <param name="id"></param>     
         [HttpGet("user/{id}")]
-        [Authorize(policy:"Bearer")]
+        [Authorize]
         public void UserInfo(string id)
         {
         }

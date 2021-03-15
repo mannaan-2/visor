@@ -21,11 +21,37 @@ namespace Visor.Data.MySql.Constants
         public static IEnumerable<ApiResource> Apis =>
            new List<ApiResource>
         {
-             new ApiResource("users", "User management api"),
+             new ApiResource("users", "User management api"){ 
+                 Scopes = new List<string> { "anon-user", "authenticated-user" }
+             },
              new ApiResource("api", "dummy"),
              new ApiResource("forms", "Forms api"),
 
         };
+        public static IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new List<ApiScope>
+    {
+        new ApiScope(name: "anon-user",   displayName: "Anonymous users"),
+        new ApiScope(name: "authenticated-user",  displayName: "Authenticated users"),
+    };
+        }
+        public static IEnumerable<Client> swaggerClient => new List<Client>
+        {
+            new Client
+            {
+                ClientId = "swagger",
+                ClientName = "Swagger UI",
+                ClientSecrets = { new Secret("secret".Sha256()) }, // change me!
 
+                AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                RequirePkce = true,
+                RequireClientSecret = true,
+
+                RedirectUris = { "https://localhost:44382/swagger/oauth2-redirect.html" },
+                AllowedCorsOrigins = { "https://localhost:44382" },
+                AllowedScopes = { "anon-user", "authenticated-user" }
+            }
+        };
     }
 }

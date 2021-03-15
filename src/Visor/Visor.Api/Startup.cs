@@ -53,21 +53,21 @@ namespace Visor.Api
             //{
             //    options.AddPolicy("ww",Microsoft.AspNetCore.Authorization.AuthorizationPolicy ;
             //});
-            //services.AddAuthentication("Bearer")
-            //        .AddJwtBearer("Bearer", options =>
-            //        {
-            //          options.Authority = "https://localhost:44382/";
-            //          options.RequireHttpsMetadata = false;
+            services.AddAuthentication("Bearer")
+                    .AddJwtBearer("Bearer", options =>
+                    {
+                        options.Authority = "https://localhost:44382/";
+                        options.RequireHttpsMetadata = false;
 
-            //          options.Audience = "forms";
-            //        })
-            //        .AddJwtBearer("Bearer2", options =>
-            //        {
-            //            options.Authority = "https://localhost:44382/";
-            //            options.RequireHttpsMetadata = false;
+                        options.Audience = "users";
+                    });
+                    //.AddJwtBearer("Bearer2", options =>
+                    //{
+                    //    options.Authority = "https://localhost:44382/";
+                    //    options.RequireHttpsMetadata = false;
 
-            //            options.Audience = "forms2";
-            //        });
+                    //    options.Audience = "forms2";
+                    //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

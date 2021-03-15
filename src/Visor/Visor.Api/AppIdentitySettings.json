@@ -58,7 +58,7 @@
         "ClientName": "mvc client ",
         "ClientSecrets": [ { "Value": "35224d0d3465d74e855f8d69a136e79c744ea35a675d3393360a327cbf6359a2" } ],
         "AllowedGrantTypes": [ "authorization_code" ],
-        "AllowedScopes": [ "openid", "profile", "users"],
+        "AllowedScopes": [ "openid", "profile", "users" ],
         "RedirectUris": [ "http://localhost:5002/signin-oidc" ],
         "PostLogoutRedirectUris": [ "http://localhost:5002/signout-callback-oidc" ],
         "RequireConsent": false,
@@ -66,6 +66,20 @@
         "RequireClientSecret": false,
         "AlwaysIncludeUserClaimsInIdToken": true
       }
+      //{
+      //  "Enabled": true,
+      //  "ClientId": "swagger",
+      //  "ClientName": "swagger client ",
+      //  "ClientSecrets": [ { "Value": "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b" } ],
+      //  "AllowedGrantTypes": [ "client_credentials" ],
+      //  "AllowedScopes": [ "users" ],
+      //  "RedirectUris": [ "https://localhost:44382/oauth2-redirect.html" ],
+      //  "PostLogoutRedirectUris": [ "https://localhost:44382" ]
+      //  //"RequireConsent": false,
+      //  //"RequirePkce": true,
+      //  //"RequireClientSecret": false,
+      //  //"AlwaysIncludeUserClaimsInIdToken": true
+      //}
     ]
   }
 }
