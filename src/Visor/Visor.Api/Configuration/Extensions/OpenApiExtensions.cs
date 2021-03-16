@@ -55,8 +55,9 @@ namespace Visor.Api.Configuration.Extensions
                             TokenUrl = new Uri("https://localhost:44382/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"authenticated-user","Authenticated users" },
-                                {"anon-user","Anonymous users" }
+
+                                {"users.authenticated.scope","Authenticated users" },
+                                {"users.anon.scope","Anonymous users" }
                             },
                         },
                         AuthorizationCode = new OpenApiOAuthFlow
@@ -65,8 +66,8 @@ namespace Visor.Api.Configuration.Extensions
                             TokenUrl = new Uri("https://localhost:44382/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"authenticated-user","Authenticated users" },
-                                {"anon-user","Anonymous users" }
+                                {"users.authenticated.scope","Authenticated users" },
+                                {"users.anon.scope","Anonymous users" }
                             },
                         }
                     }

@@ -22,18 +22,16 @@ namespace Visor.Data.MySql.Constants
            new List<ApiResource>
         {
              new ApiResource("users", "User management api"){ 
-                 Scopes = new List<string> { "anon-user", "authenticated-user" }
-             },
-             new ApiResource("api", "dummy"),
-             new ApiResource("forms", "Forms api"),
+                 Scopes = new List<string> { "users.anon.scope", "users.authenticated.scope" }
+             }
 
         };
         public static IEnumerable<ApiScope> GetApiScopes()
         {
             return new List<ApiScope>
     {
-        new ApiScope(name: "anon-user",   displayName: "Anonymous users"),
-        new ApiScope(name: "authenticated-user",  displayName: "Authenticated users"),
+        new ApiScope(name: "users.anon.scope",   displayName: "Anonymous users"),
+        new ApiScope(name: "users.authenticated.scope",  displayName: "Authenticated users"),
     };
         }
         public static IEnumerable<Client> swaggerClient => new List<Client>
@@ -50,7 +48,7 @@ namespace Visor.Data.MySql.Constants
 
                 RedirectUris = { "https://localhost:44382/swagger/oauth2-redirect.html" },
                 AllowedCorsOrigins = { "https://localhost:44382" },
-                AllowedScopes = { "anon-user", "authenticated-user" }
+                AllowedScopes = { "users.anon.scope", "users.authenticated.scope" }
             }
         };
     }

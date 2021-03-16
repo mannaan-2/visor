@@ -40,11 +40,6 @@ namespace Visor.Api
                 });
             });
             services.AddMySqlIdentityProvider(Configuration, "users");
-
-            //services.AddDatabaseDeveloperPageExceptionFilter();
-
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<IdentityContext>();
             services.AddControllersWithViews(o=>{
                 o.UseGeneralRoutePrefix("v{version:apiVersion}"); // o.UseGeneralRoutePrefix("api/v{version:apiVersion}");
             });
@@ -52,10 +47,6 @@ namespace Visor.Api
             services.AddApiVersioning();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.AddOpenApi();
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("ww",Microsoft.AspNetCore.Authorization.AuthorizationPolicy ;
-            //});
             services.AddAuthorization(auth =>
             {
                 auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
