@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Visor.Data.MySql.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Visor.Api.Configuration.Pocos;
 using Microsoft.AspNetCore.Identity;
 using Visor.Data.MySql.Identity.Entities;
 using Visor.Data.MySql;
@@ -17,8 +16,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Visor.Data.MySql.Constants;
 using IdentityServer4;
+using Visor.Abstractions.Entities.Config.Identity;
 
-namespace Visor.Api.Configuration
+namespace Visor.Data.MySql.Utilities
 {
     public static class MySqlIdentityProvider
     {
@@ -81,7 +81,7 @@ namespace Visor.Api.Configuration
                 //.AddInMemoryClients(IdentityServerConfig.swaggerClient)
                 .AddInMemoryClients(configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
-                //.AddProfileService<IdentityProfileService>();
+            //.AddProfileService<IdentityProfileService>();
 
             services.Configure<CookieAuthenticationOptions>(IdentityServerConstants.DefaultCookieAuthenticationScheme, options =>
             {
@@ -89,18 +89,18 @@ namespace Visor.Api.Configuration
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.IsEssential = true;
             });
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = $"/Identity/Account/Login";
-            //    options.LogoutPath = $"/Identity/Account/Logout";
-            //    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            services.ConfigureApplicationCookie(options =>
+            {
+                //options.LoginPath = $"/Identity/Account/Login";
+                //options.LogoutPath = $"/Identity/Account/Logout";
+                //options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 
-            //    options.Cookie.HttpOnly = true;
-            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-            //    options.Cookie.SameSite = SameSiteMode.None;
-            //    options.SlidingExpiration = true;
-            //    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            //});
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.SlidingExpiration = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            });
 
             /**DONT**/
             //IdentityModelEventSource.ShowPII = true;

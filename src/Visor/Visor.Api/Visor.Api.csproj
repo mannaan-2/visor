@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Visor.Abstractions\Visor.Abstractions.csproj" />
     <ProjectReference Include="..\Visor.Data.MySql\Visor.Data.MySql.csproj" />
   </ItemGroup>
 

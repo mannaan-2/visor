@@ -13,6 +13,7 @@ using Visor.Api.Configuration.Extensions;
 using Visor.Data.MySql;
 using Visor.Data.MySql.Abstractions;
 using Visor.Data.MySql.Tenancy.Pipelines;
+using Visor.Data.MySql.Utilities;
 
 namespace Visor.Api
 {
@@ -66,7 +67,7 @@ namespace Visor.Api
                             ValidateAudience = false
                         };
                     });
-            services.AddLocalApiAuthentication();
+            //services.AddLocalApiAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

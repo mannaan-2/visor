@@ -1,4 +1,4 @@
-﻿namespace Visor.Api.Configuration.Pocos
+﻿namespace Visor.Abstractions.Entities.Config.Identity
 {
     public class UserSettings
     {

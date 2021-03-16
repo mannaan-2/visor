@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Api", "Visor.Api\Visor.Api.csproj", "{2EDB923B-858B-4106-BA0D-1DB5E12C2DF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visor.Api", "Visor.Api\Visor.Api.csproj", "{2EDB923B-858B-4106-BA0D-1DB5E12C2DF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Data.MySql", "Visor.Data.MySql\Visor.Data.MySql.csproj", "{980186D0-52FF-4DA8-81FB-42E670AA538F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visor.Data.MySql", "Visor.Data.MySql\Visor.Data.MySql.csproj", "{980186D0-52FF-4DA8-81FB-42E670AA538F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Abstractions", "Visor.Abstractions\Visor.Abstractions.csproj", "{5CA8836E-8439-48E6-807F-C393E0A38487}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{980186D0-52FF-4DA8-81FB-42E670AA538F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{980186D0-52FF-4DA8-81FB-42E670AA538F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{980186D0-52FF-4DA8-81FB-42E670AA538F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CA8836E-8439-48E6-807F-C393E0A38487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CA8836E-8439-48E6-807F-C393E0A38487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CA8836E-8439-48E6-807F-C393E0A38487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CA8836E-8439-48E6-807F-C393E0A38487}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
