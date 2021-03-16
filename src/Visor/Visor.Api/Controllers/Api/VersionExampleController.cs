@@ -86,6 +86,7 @@ namespace Visor.Api.Controllers.Api
         /// </summary>
         /// <param name="id"></param>     
         [HttpDelete("{id}")]
+        [Authorize()]
         public void Delete(int id)
         {
         }
@@ -93,10 +94,11 @@ namespace Visor.Api.Controllers.Api
         /// gets a second Item
         /// </summary>
         /// <param name="id"></param>     
-        [HttpGet("user/{id}")]
-        [Authorize]
-        public void UserInfo(string id)
+        [HttpGet("user")]
+        [Authorize("Bearer")]
+        public string UserInfo()
         {
+            return "Success";
         }
     }
 

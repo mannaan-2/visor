@@ -1,9 +1,12 @@
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using Visor.Api.Configuration;
 using Visor.Api.Configuration.Extensions;
@@ -53,21 +56,26 @@ namespace Visor.Api
             //{
             //    options.AddPolicy("ww",Microsoft.AspNetCore.Authorization.AuthorizationPolicy ;
             //});
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                    .RequireAuthenticatedUser()
+                    .Build()) ;
+            });
             services.AddAuthentication("Bearer")
                     .AddJwtBearer("Bearer", options =>
                     {
                         options.Authority = "https://localhost:44382/";
                         options.RequireHttpsMetadata = false;
 
-                        options.Audience = "users";
+                        //options.Audience = "users";
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateAudience = false
+                        };
                     });
-                    //.AddJwtBearer("Bearer2", options =>
-                    //{
-                    //    options.Authority = "https://localhost:44382/";
-                    //    options.RequireHttpsMetadata = false;
-
-                    //    options.Audience = "forms2";
-                    //});
+            services.AddLocalApiAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,10 +97,10 @@ namespace Visor.Api
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseMySqlIdentityProvider();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseIdentityServer();
+            app.UseMySqlIdentityProvider();
             app.UseOpenApi();
 
             app.UseEndpoints(endpoints =>
