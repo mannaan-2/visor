@@ -88,7 +88,7 @@ namespace Visor.Api.Configuration.Extensions
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Visor Auth API");
-                //options.RoutePrefix = string.Empty;
+                options.RoutePrefix = string.Empty;
                 options.OAuthClientId("swagger");
                 options.OAuthAppName("Swagger UI client");
                 options.OAuthUsePkce();

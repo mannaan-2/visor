@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Visor.Api.Controllers.Api
+namespace Visor.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Visor.Api.Controllers.Api
+namespace Visor.Api.Controllers
 {
     [Route("[controller]")]
     [ApiVersion("1")]
@@ -20,7 +20,7 @@ namespace Visor.Api.Controllers.Api
     public class VersionExampleController : ControllerBase
     {
         [HttpGet]
-       // [HttpGet("version"), MapToApiVersion("1")] //Maps by default
+        // [HttpGet("version"), MapToApiVersion("1")] //Maps by default
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -70,7 +70,7 @@ namespace Visor.Api.Controllers.Api
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
 
-        
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

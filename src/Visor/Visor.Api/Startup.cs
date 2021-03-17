@@ -44,10 +44,10 @@ namespace Visor.Api
             services.AddControllersWithViews(o=>{
                 o.UseGeneralRoutePrefix("v{version:apiVersion}"); // o.UseGeneralRoutePrefix("api/v{version:apiVersion}");
             });
-            services.AddRazorPages();
+
             services.AddApiVersioning();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-            services.AddOpenApi();
+
             services.AddAuthorization(auth =>
             {
                 auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
@@ -68,6 +68,8 @@ namespace Visor.Api
                         };
                     });
             //services.AddLocalApiAuthentication();
+
+            services.AddOpenApi();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,7 +103,6 @@ namespace Visor.Api
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
-                endpoints.MapRazorPages();
             });
         }
     }
