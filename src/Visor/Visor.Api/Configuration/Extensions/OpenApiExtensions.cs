@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -8,39 +9,45 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Visor.Abstractions.Entities.Config.OpenApi;
 
 namespace Visor.Api.Configuration.Extensions
 {
     public static class OpenApiExtensions
     {
-        public static IServiceCollection AddOpenApi(this IServiceCollection services)
+        public static IServiceCollection AddOpenApi(this IServiceCollection services, IConfiguration configuration)
         {
+            var settingsSection = configuration.GetSection("OpenApi");
+            // Inject AppIdentitySettings so that others can use too
+            services.Configure<Settings>(settingsSection);
+
+            var openApiSettings = settingsSection.Get<Settings>();
             services.AddSwaggerGen(c =>
             {
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc(openApiSettings.Version, new OpenApiInfo
                 {
-                    Version = "v1",
-                    Title = "Visor auth API",
-                    Description = "A simple ASP.NET Core Identity Server",
-                    TermsOfService = new Uri("https://github.com/mannaan-2/visor"),
+                    Version = openApiSettings.Version,
+                    Title = openApiSettings.Title,
+                    Description = openApiSettings.Description,
+                    TermsOfService = new Uri(openApiSettings.TermsOfServiceUrl),
                     Contact = new OpenApiContact
                     {
-                        Name = "Abdul Manan",
-                        Email = string.Empty,
-                        Url = new Uri("https://github.com/mannaan-2/visor"),
+                        Name = openApiSettings.ContactName,
+                        Email = openApiSettings.ContactEmail,
+                        Url = new Uri(openApiSettings.ContactUrl),
                     },
                     License = new OpenApiLicense
                     {
-                        Name = "GPL-3.0",
-                        Url = new Uri("https://github.com/mannaan-2/visor"),
+                        Name = openApiSettings.License,
+                        Url = new Uri(openApiSettings.LicenseUrl),
                     }
                 });
                 // Set the comments path for the Swagger JSON and UI.
                 //File is only generated if following is added to Proj file under PropertYGroup
                 //<GenerateDocumentationFile>true</GenerateDocumentationFile>
                 //<NoWarn>$(NoWarn); 1591</NoWarn> //This suppreses the warnings in solution
-                   var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -50,30 +57,21 @@ namespace Visor.Api.Configuration.Extensions
                     {
                         ClientCredentials = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://localhost:44382/connect/authorize"),
-                            TokenUrl = new Uri("https://localhost:44382/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-
-                                {"users.authenticated.scope","Authenticated users" },
-                                {"users.anon.scope","Anonymous users" }
-                            },
+                            AuthorizationUrl = new Uri(openApiSettings.AuthorizationUrl),
+                            TokenUrl = new Uri(openApiSettings.TokenUrl),
+                            Scopes = openApiSettings.Scopes,
                         },
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://localhost:44382/connect/authorize"),
-                            TokenUrl = new Uri("https://localhost:44382/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                {"users.authenticated.scope","Authenticated users" },
-                                {"users.anon.scope","Anonymous users" }
-                            },
+                            AuthorizationUrl = new Uri(openApiSettings.AuthorizationUrl),
+                            TokenUrl = new Uri(openApiSettings.TokenUrl),
+                            Scopes = openApiSettings.Scopes,
                         }
                     }
-                }) ;
+                });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
-           
+
             return services;
         }
         public static IApplicationBuilder UseOpenApi(

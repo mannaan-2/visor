@@ -18,16 +18,17 @@ namespace Visor.Tenancy.Tenancy.Pipelines
 
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
-            if (tenantContext.Resolved)
-                return;
-            var referrer = context.Request.Headers["Referer"].ToString();
-            if (!string.IsNullOrEmpty(referrer))
+            if (!tenantContext.Resolved)
             {
-                var uriReferer = new Uri(referrer);
-                var tenant = tenantRepository.FindByHostName(uriReferer.Host);
-                if (tenant != null && tenant.Active)
+                var referrer = context.Request.Headers["Referer"].ToString();
+                if (!string.IsNullOrEmpty(referrer))
                 {
-                    tenantContext.Set(tenant.Key);
+                    var uriReferer = new Uri(referrer);
+                    var tenant = tenantRepository.FindByHostName(uriReferer.Host);
+                    if (tenant != null && tenant.Active)
+                    {
+                        tenantContext.Set(tenant.Key);
+                    }
                 }
             }
             await _next(context);

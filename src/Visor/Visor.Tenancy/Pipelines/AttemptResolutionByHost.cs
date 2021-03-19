@@ -15,13 +15,14 @@ namespace Visor.Tenancy.Pipelines
 
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
-            if (tenantContext.Resolved)
-                return;
-            var host = context.Request.Host.Host;
-            var tenant = tenantRepository.FindByHostName(host);
-            if (tenant != null && tenant.Active)
+            if (!tenantContext.Resolved)
             {
-                tenantContext.Set(tenant.Key);
+                var host = context.Request.Host.Host;
+                var tenant = tenantRepository.FindByHostName(host);
+                if (tenant != null && tenant.Active)
+                {
+                    tenantContext.Set(tenant.Key);
+                }
             }
             await _next(context);
         }

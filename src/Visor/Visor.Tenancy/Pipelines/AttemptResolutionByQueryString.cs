@@ -18,12 +18,13 @@ namespace Visor.Tenancy.Tenancy.Pipelines
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
             if (!tenantContext.Resolved)
-                return;
-            var key = context.Request.Query[Visor.Tenancy.Abstractions.Constants.TenantQueryStringParam].ToString();
-            var tenant = tenantRepository.FindByKey(key);
-            if (tenant != null && tenant.Active)
             {
-                tenantContext.Set(tenant.Key);
+                var key = context.Request.Query[Visor.Tenancy.Abstractions.Constants.TenantQueryStringParam].ToString();
+                var tenant = tenantRepository.FindByKey(key);
+                if (tenant != null && tenant.Active)
+                {
+                    tenantContext.Set(tenant.Key);
+                }
             }
             await _next(context);
         }

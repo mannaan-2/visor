@@ -16,15 +16,16 @@ namespace Visor.Tenancy.Tenancy.Pipelines
 
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
-            if (tenantContext.Resolved)
-                return;
-            var key = context.Request.Cookies[Visor.Tenancy.Abstractions.Constants.TenantCookie];
-            if (!string.IsNullOrEmpty(key))
+            if (!tenantContext.Resolved)
             {
-                var tenant = tenantRepository.FindByKey(key);
-                if (tenant != null && tenant.Active)
+                var key = context.Request.Cookies[Visor.Tenancy.Abstractions.Constants.TenantCookie];
+                if (!string.IsNullOrEmpty(key))
                 {
-                    tenantContext.Set(tenant.Key);
+                    var tenant = tenantRepository.FindByKey(key);
+                    if (tenant != null && tenant.Active)
+                    {
+                        tenantContext.Set(tenant.Key);
+                    }
                 }
             }
             await _next(context);

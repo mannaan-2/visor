@@ -67,7 +67,7 @@ namespace Visor.Api
                     });
             //services.AddLocalApiAuthentication();
 
-            services.AddOpenApi();
+            services.AddOpenApi(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
