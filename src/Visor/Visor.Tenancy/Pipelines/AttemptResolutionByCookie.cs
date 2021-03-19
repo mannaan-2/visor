@@ -17,7 +17,7 @@ namespace Visor.Tenancy.Tenancy.Pipelines
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
             if (tenantContext.Resolved)
-                await _next(context);
+                return;
             var key = context.Request.Cookies[Visor.Tenancy.Abstractions.Constants.TenantCookie];
             if (!string.IsNullOrEmpty(key))
             {

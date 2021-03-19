@@ -16,7 +16,7 @@ namespace Visor.Tenancy.Pipelines
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
             if (tenantContext.Resolved)
-                await _next(context);
+                return;
             var host = context.Request.Host.Host;
             var tenant = tenantRepository.FindByHostName(host);
             if (tenant != null && tenant.Active)

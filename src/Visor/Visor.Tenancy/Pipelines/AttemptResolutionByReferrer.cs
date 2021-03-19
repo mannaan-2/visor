@@ -6,6 +6,7 @@ using Visor.Tenancy.Abstractions;
 
 namespace Visor.Tenancy.Tenancy.Pipelines
 {
+    [Obsolete]
     public class AttemptResolutionByReferrer 
     {
         private readonly RequestDelegate _next;
@@ -18,7 +19,7 @@ namespace Visor.Tenancy.Tenancy.Pipelines
         public async Task InvokeAsync(HttpContext context, ITenantRepository tenantRepository, ITenantContext tenantContext)
         {
             if (tenantContext.Resolved)
-                await _next(context);
+                return;
             var referrer = context.Request.Headers["Referer"].ToString();
             if (!string.IsNullOrEmpty(referrer))
             {

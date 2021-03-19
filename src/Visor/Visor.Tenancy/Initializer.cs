@@ -21,8 +21,7 @@ namespace Visor.Tenancy
             app.InitTenantResolution()
              .Then<AttemptResolutionByHost>()
              .Then<AttemptResolutionByQueryString>()
-             .Then<AttemptResolutionByReferrer>()
-             .Then<AttemptResolutionByCookie>()
+             //.Then<AttemptResolutionByCookie>()
              .Then<VerifyTenantResolution, TenantVerificationOptions>(new TenantVerificationOptions(new List<string>()
              {
                    "/.well-known/openid-configuration",
