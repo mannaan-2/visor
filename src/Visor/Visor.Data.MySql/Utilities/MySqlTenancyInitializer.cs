@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shigar.Core.Tenants.Services;
 using Visor.Data.MySql.Identity.Entities;
-using Visor.Data.MySql.Tenancy.Services;
+using Visor.Tenancy;
 using Visor.Tenancy.Abstractions;
 
 namespace Visor.Data.MySql
@@ -11,8 +11,9 @@ namespace Visor.Data.MySql
 
         public static void AddMySqlTenancy(this IServiceCollection services)
         {
+            services.AddTenancy();
             services.AddTransient<ITenantRepository, TenantRepository>();
-            services.AddTransient<ITenantContext, TenantContext>();
+            
         }
         public static void InitializeDefaultTenant(this IServiceCollection services, string connectionString)
         {

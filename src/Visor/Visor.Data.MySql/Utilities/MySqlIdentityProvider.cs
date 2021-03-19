@@ -29,15 +29,13 @@ namespace Visor.Data.MySql.Utilities
             DesignTimeIdDbContextFactory.SetConnectionString(configuration.GetConnectionString(connectionString));
             services.AddMySqlIdentity(configuration, connectionString);
             services.AddMySqlTenancy();
-            services.AddHttpContextAccessor();
-
             services.MigrateDatabase();
-            services.InitializeDefaultTenant(connectionString);
-            services.AddIdentityServer(configuration);
 
+            services.AddIdentityServer(configuration);
             services.ConfigureCookies();
 
-
+            services.AddHttpContextAccessor();
+            services.InitializeDefaultTenant(connectionString);
             return services;
         }
         public static IApplicationBuilder UseTenantedMySqlIdentityProvider(
