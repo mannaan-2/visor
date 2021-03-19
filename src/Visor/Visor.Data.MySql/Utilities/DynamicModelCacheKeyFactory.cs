@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
 namespace Visor.Data.MySql.Utilities
 {

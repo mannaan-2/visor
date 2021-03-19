@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
-
+using System;
 using System.Threading.Tasks;
 using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
-namespace Visor.Data.MySql.Tenancy.Pipelines
+namespace Visor.Tenancy.Tenancy.Pipelines
 {
-    public class AttemptResolutionByCookie 
+    public class AttemptResolutionByReferrer 
     {
         private readonly RequestDelegate _next;
-        public AttemptResolutionByCookie( RequestDelegate next)
+
+        public AttemptResolutionByReferrer( RequestDelegate next)
         {
             _next = next;
         }
@@ -17,10 +19,11 @@ namespace Visor.Data.MySql.Tenancy.Pipelines
         {
             if (tenantContext.Resolved)
                 await _next(context);
-            var key = context.Request.Cookies[Abstractions.Constants.TenantCookie];
-            if (!string.IsNullOrEmpty(key))
+            var referrer = context.Request.Headers["Referer"].ToString();
+            if (!string.IsNullOrEmpty(referrer))
             {
-                var tenant = tenantRepository.FindByKey(key);
+                var uriReferer = new Uri(referrer);
+                var tenant = tenantRepository.FindByHostName(uriReferer.Host);
                 if (tenant != null && tenant.Active)
                 {
                     tenantContext.Set(tenant.Key);

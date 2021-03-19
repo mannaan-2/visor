@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
 namespace Visor.Data.MySql.Utilities
 {

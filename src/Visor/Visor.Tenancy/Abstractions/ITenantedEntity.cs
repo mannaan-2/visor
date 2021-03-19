@@ -1,4 +1,4 @@
-﻿namespace Visor.Data.MySql.Abstractions
+﻿namespace Visor.Tenancy.Abstractions
 {
     public interface ITenantedEntity
     {

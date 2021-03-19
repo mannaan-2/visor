@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace Visor.Data.MySql.Tenancy.Pipelines
+namespace Visor.Tenancy.Pipelines
 {
     public class TenantResolutionBuilder
     {

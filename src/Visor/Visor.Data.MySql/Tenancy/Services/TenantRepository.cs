@@ -5,6 +5,7 @@ using System.Linq;
 using Visor.Data.MySql.Abstractions;
 using Visor.Data.MySql.Identity;
 using Visor.Data.MySql.Identity.Entities;
+using Visor.Tenancy.Abstractions;
 
 namespace Shigar.Core.Tenants.Services
 {

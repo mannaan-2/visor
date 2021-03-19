@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -82,9 +81,6 @@ namespace Visor.Api.Configuration.Extensions
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Visor Auth API");
@@ -92,7 +88,6 @@ namespace Visor.Api.Configuration.Extensions
                 options.OAuthClientId("swagger");
                 options.OAuthAppName("Swagger UI client");
                 options.OAuthUsePkce();
-                //options.OAuthClientSecret("secret");
                 
             });
             return app;

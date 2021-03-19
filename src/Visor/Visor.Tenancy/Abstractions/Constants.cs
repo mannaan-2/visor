@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Visor.Data.MySql.Abstractions
+namespace Visor.Tenancy.Abstractions
 {
     public class Constants
     {

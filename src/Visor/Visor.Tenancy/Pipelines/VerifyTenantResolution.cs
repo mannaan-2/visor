@@ -4,8 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
-namespace Visor.Data.MySql.Tenancy.Pipelines
+namespace Visor.Tenancy.Pipelines
 {
     public class VerifyTenantResolution
     {

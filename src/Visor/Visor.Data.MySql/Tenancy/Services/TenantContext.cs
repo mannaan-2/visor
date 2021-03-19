@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
-namespace Shigar.Core.Tenants.Services
+namespace Visor.Data.MySql.Tenancy.Services
 {
     public class TenantContext : ITenantContext
     {
@@ -12,7 +12,7 @@ namespace Shigar.Core.Tenants.Services
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public string Key => _httpContextAccessor?.HttpContext?.Items?[Constants.TenantQueryStringParam]?.ToString();
+        public string Key => _httpContextAccessor?.HttpContext?.Items?[Visor.Tenancy.Abstractions.Constants.TenantQueryStringParam]?.ToString();
 
         public bool Resolved => !string.IsNullOrEmpty(Key);
         public void Set(string key)
@@ -22,7 +22,7 @@ namespace Shigar.Core.Tenants.Services
                 return;
             if (string.IsNullOrEmpty(key))
             {
-                context.Response.Cookies.Delete(Constants.TenantCookie);
+                context.Response.Cookies.Delete(Visor.Tenancy.Abstractions.Constants.TenantCookie);
             }
             else
             {
@@ -30,11 +30,11 @@ namespace Shigar.Core.Tenants.Services
                 {
                     Expires = DateTime.Now.AddMinutes(60)
                 };
-                context.Response.Cookies.Append(Constants.TenantCookie, key, option);
+                context.Response.Cookies.Append(Visor.Tenancy.Abstractions.Constants.TenantCookie, key, option);
             }
             if (_httpContextAccessor?.HttpContext?.Items == null)
                 return;
-            _httpContextAccessor.HttpContext.Items[Constants.TenantQueryStringParam] = key;
+            _httpContextAccessor.HttpContext.Items[Visor.Tenancy.Abstractions.Constants.TenantQueryStringParam] = key;
         }
     }
 

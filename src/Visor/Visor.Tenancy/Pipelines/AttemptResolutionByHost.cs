@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
-namespace Visor.Data.MySql.Tenancy.Pipelines
+namespace Visor.Tenancy.Pipelines
 {
-    public class AttemptResolutionByHost 
+    public class AttemptResolutionByHost
     {
         private readonly RequestDelegate _next;
-        public AttemptResolutionByHost( RequestDelegate next)
+        public AttemptResolutionByHost(RequestDelegate next)
         {
             _next = next;
         }

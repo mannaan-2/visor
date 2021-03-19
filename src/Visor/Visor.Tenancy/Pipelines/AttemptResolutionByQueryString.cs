@@ -2,8 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
-namespace Visor.Data.MySql.Tenancy.Pipelines
+namespace Visor.Tenancy.Tenancy.Pipelines
 {
     public class AttemptResolutionByQueryString 
     {
@@ -18,7 +19,7 @@ namespace Visor.Data.MySql.Tenancy.Pipelines
         {
             if (tenantContext.Resolved)
                 await _next(context);
-            var key = context.Request.Query[Abstractions.Constants.TenantQueryStringParam].ToString();
+            var key = context.Request.Query[Visor.Tenancy.Abstractions.Constants.TenantQueryStringParam].ToString();
             var tenant = tenantRepository.FindByKey(key);
             if (tenant != null && tenant.Active)
             {

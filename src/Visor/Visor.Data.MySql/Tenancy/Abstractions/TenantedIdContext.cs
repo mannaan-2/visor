@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Visor.Data.MySql.Identity.Entities;
 using Visor.Data.MySql.Utilities;
+using Visor.Tenancy.Abstractions;
 
 namespace Visor.Data.MySql.Abstractions
 {

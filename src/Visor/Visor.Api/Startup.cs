@@ -10,10 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using Visor.Api.Configuration;
 using Visor.Api.Configuration.Extensions;
-using Visor.Data.MySql;
-using Visor.Data.MySql.Abstractions;
-using Visor.Data.MySql.Tenancy.Pipelines;
 using Visor.Data.MySql.Utilities;
+using Visor.Tenancy;
 
 namespace Visor.Api
 {
@@ -40,7 +38,7 @@ namespace Visor.Api
                            .AllowAnyHeader();
                 });
             });
-            services.AddMySqlIdentityProvider(Configuration, "users");
+            services.AddTenantedMySqlIdentityProvider(Configuration, "users");
             services.AddControllersWithViews(o=>{
                 o.UseGeneralRoutePrefix("v{version:apiVersion}"); // o.UseGeneralRoutePrefix("api/v{version:apiVersion}");
             });
@@ -87,14 +85,16 @@ namespace Visor.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
+            // resolve context before auth
+            app.UseTenantedMySqlIdentityProvider();// resolve context before auth
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseIdentityServer();
-            app.UseMySqlIdentityProvider();
+
             app.UseOpenApi();
 
             app.UseEndpoints(endpoints =>

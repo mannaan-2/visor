@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Threading;
 using System.Threading.Tasks;
 using Visor.Data.MySql.Utilities;
+using Visor.Tenancy.Abstractions;
 
 namespace Visor.Data.MySql.Abstractions
 {

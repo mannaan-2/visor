@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
-namespace Visor.Data.MySql.Abstractions
+namespace Visor.Tenancy.Abstractions
 {
     public interface ITenantRepository
     {

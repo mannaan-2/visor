@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Visor.Data.MySql.Abstractions;
+using Visor.Tenancy.Abstractions;
 
 namespace Visor.Data.MySql.Identity.Entities
 {

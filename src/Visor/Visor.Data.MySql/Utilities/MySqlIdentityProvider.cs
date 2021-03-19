@@ -17,13 +17,37 @@ using Microsoft.AspNetCore.Http;
 using Visor.Data.MySql.Constants;
 using IdentityServer4;
 using Visor.Abstractions.Entities.Config.Identity;
+using Visor.Tenancy;
 
 namespace Visor.Data.MySql.Utilities
 {
     public static class MySqlIdentityProvider
     {
-        public static IServiceCollection AddMySqlIdentityProvider(this IServiceCollection services,
+        public static IServiceCollection AddTenantedMySqlIdentityProvider(this IServiceCollection services,
           IConfiguration configuration, string connectionString)
+        {
+            DesignTimeIdDbContextFactory.SetConnectionString(configuration.GetConnectionString(connectionString));
+            services.AddMySqlIdentity(configuration, connectionString);
+            services.AddMySqlTenancy();
+            services.AddHttpContextAccessor();
+
+            services.MigrateDatabase();
+            services.InitializeDefaultTenant(connectionString);
+            services.AddIdentityServer(configuration);
+
+            services.ConfigureCookies();
+
+
+            return services;
+        }
+        public static IApplicationBuilder UseTenantedMySqlIdentityProvider(
+          this IApplicationBuilder app)
+        {
+            app.UseTenants();
+            return app;
+        }
+        private static IServiceCollection AddMySqlIdentity(this IServiceCollection services,
+         IConfiguration configuration, string connectionString)
         {
             var settingsSection = configuration.GetSection("AppIdentitySettings");
             // Inject AppIdentitySettings so that others can use too
@@ -60,10 +84,13 @@ namespace Visor.Data.MySql.Utilities
             })
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
-            services.AddTenants();
-            services.AddHttpContextAccessor();
-            DesignTimeIdDbContextFactory.SetConnectionString(configuration.GetConnectionString(connectionString));
 
+
+            return services;
+        }
+        private static IServiceCollection MigrateDatabase(this IServiceCollection services)
+        {
+           
             var serviceProvider = services.BuildServiceProvider();
             var identityContext = serviceProvider.GetService<IdentityContext>();
             // identityContext.Database.EnsureCreated();
@@ -71,7 +98,13 @@ namespace Visor.Data.MySql.Utilities
             {
                 identityContext.Database.Migrate();
             }
-            services.InitializeDefaultTenant(connectionString);
+
+            return services;
+        }
+        public static IServiceCollection AddIdentityServer(this IServiceCollection services,
+          IConfiguration configuration)
+        {
+          
             //// Adds IdentityServer
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
@@ -82,7 +115,14 @@ namespace Visor.Data.MySql.Utilities
                 .AddInMemoryClients(configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
             //.AddProfileService<IdentityProfileService>();
+            /**DONT**/
+            //IdentityModelEventSource.ShowPII = true;
 
+            return services;
+        }
+        public static IServiceCollection ConfigureCookies(this IServiceCollection services)
+        {
+            
             services.Configure<CookieAuthenticationOptions>(IdentityServerConstants.DefaultCookieAuthenticationScheme, options =>
             {
                 options.Cookie.SameSite = SameSiteMode.None;
@@ -101,18 +141,7 @@ namespace Visor.Data.MySql.Utilities
                 options.SlidingExpiration = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
-
-            /**DONT**/
-            //IdentityModelEventSource.ShowPII = true;
-
-
             return services;
-        }
-        public static IApplicationBuilder UseMySqlIdentityProvider(
-          this IApplicationBuilder app)
-        {
-            app.UseTenants();
-            return app;
         }
     }
 }
