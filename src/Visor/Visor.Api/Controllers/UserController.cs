@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Visor.Abstractions.Entities.Requests;
 using Visor.Abstractions.Entities.Results;
 using Visor.Abstractions.User;
+using Visor.Tenancy.Abstractions;
 
 namespace Visor.Api.Controllers
 {
@@ -19,10 +17,12 @@ namespace Visor.Api.Controllers
     public class UserController : Controller
     {
         private readonly IRegistrationManager _registrationManager;
+        private readonly ITenantContext _tenantContext;
 
-        public UserController(IRegistrationManager registrationManager)
+        public UserController(IRegistrationManager registrationManager, ITenantContext tenantContext)
         {
             _registrationManager = registrationManager;
+            _tenantContext = tenantContext;
         }
         [HttpGet("{username}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -60,7 +60,7 @@ namespace Visor.Api.Controllers
         ///     }
         /// </returns>
         /// <response code="201">Returns the result object</response>
-        /// <response code="400">If the item is null</response>   
+        /// <response code="400">If the data is invalid</response>   
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces("application/json")]

@@ -26,11 +26,15 @@ namespace Visor.Kernel.Registration
         }
         public async Task<BaseResult> Register(string email, string password, bool requiresConfirmation = true)
         {
-            return await Register(email, email, password, requiresConfirmation);
+            return await Register(string.Empty, email, password, requiresConfirmation);
         }
         public async Task<BaseResult> Register(string userName, string email, string password, bool requiresConfirmation = true)
         {
-            var result = await _userRepository.CreateLogin(userName,email,password,!requiresConfirmation) ;
+            var result = await _userRepository.CreateLogin(
+                string.IsNullOrEmpty(userName) ? email:userName, 
+                email,
+                password,
+                !requiresConfirmation) ;
            
             return result;
         }

@@ -58,8 +58,9 @@ namespace Visor.Data.MySql.Utilities
             var identitySettings = settingsSection.Get<ApplicationIdentitySettings>();
 
             services.AddDbContext<IdentityContext>(options =>
-                options.UseMySQL(configuration.GetConnectionString(connectionString))
-
+            {
+                options.UseMySQL(configuration.GetConnectionString(connectionString));
+            }, ServiceLifetime.Transient, ServiceLifetime.Transient
             );
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -92,7 +93,7 @@ namespace Visor.Data.MySql.Utilities
         }
         private static IServiceCollection MigrateDatabase(this IServiceCollection services)
         {
-           
+
             var serviceProvider = services.BuildServiceProvider();
             var identityContext = serviceProvider.GetService<IdentityContext>();
             // identityContext.Database.EnsureCreated();
@@ -106,7 +107,7 @@ namespace Visor.Data.MySql.Utilities
         public static IServiceCollection AddIdentityServer(this IServiceCollection services,
           IConfiguration configuration)
         {
-          
+
             //// Adds IdentityServer
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
@@ -124,7 +125,7 @@ namespace Visor.Data.MySql.Utilities
         }
         public static IServiceCollection ConfigureCookies(this IServiceCollection services)
         {
-            
+
             services.Configure<CookieAuthenticationOptions>(IdentityServerConstants.DefaultCookieAuthenticationScheme, options =>
             {
                 options.Cookie.SameSite = SameSiteMode.None;
