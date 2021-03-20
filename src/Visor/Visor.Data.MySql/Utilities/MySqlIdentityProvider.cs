@@ -18,6 +18,8 @@ using Visor.Data.MySql.Constants;
 using IdentityServer4;
 using Visor.Abstractions.Entities.Config.Identity;
 using Visor.Tenancy;
+using Visor.Abstractions.Repositories;
+using Visor.Data.MySql.Repositories;
 
 namespace Visor.Data.MySql.Utilities
 {
@@ -36,6 +38,8 @@ namespace Visor.Data.MySql.Utilities
 
             services.AddHttpContextAccessor();
             services.InitializeDefaultTenant(connectionString);
+
+            services.AddTransient<IUserRepository, UserRepository>();
             return services;
         }
         public static IApplicationBuilder UseTenantedMySqlIdentityProvider(

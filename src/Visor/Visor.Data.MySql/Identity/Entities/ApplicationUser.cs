@@ -10,9 +10,9 @@ namespace Visor.Data.MySql.Identity.Entities
     public class ApplicationUser : IdentityUser, ITenantedEntity
     {
 
-        public string FirstName { get; set; }
-        //[Required]
-        public string LastName { get; set; }
+        //public string FirstName { get; set; }
+        ////[Required]
+        //public string LastName { get; set; }
     }
     public class ApplicationUserClaim : IdentityUserClaim<string>
     {

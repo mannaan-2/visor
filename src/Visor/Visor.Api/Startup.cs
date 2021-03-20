@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Visor.Api.Configuration;
 using Visor.Api.Configuration.Extensions;
 using Visor.Data.MySql.Utilities;
+using Visor.Kernel;
 using Visor.Tenancy;
 
 namespace Visor.Api
@@ -66,7 +67,7 @@ namespace Visor.Api
                         };
                     });
             //services.AddLocalApiAuthentication();
-
+            services.AddKernel(Configuration);
             services.AddOpenApi(Configuration);
         }
 
@@ -86,11 +87,11 @@ namespace Visor.Api
                 app.UseHsts();
             }
             //app.UseHttpsRedirection();
+            app.UseTenantedMySqlIdentityProvider();// resolve context before auth
             app.UseStaticFiles();
 
             app.UseRouting();
             // resolve context before auth
-            app.UseTenantedMySqlIdentityProvider();// resolve context before auth
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseIdentityServer();

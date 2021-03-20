@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Visor.Abstractions\Visor.Abstractions.csproj" />
     <ProjectReference Include="..\Visor.Data.MySql\Visor.Data.MySql.csproj" />
+    <ProjectReference Include="..\Visor.Kernel\Visor.Kernel.csproj" />
     <ProjectReference Include="..\Visor.Tenancy\Visor.Tenancy.csproj" />
   </ItemGroup>
 

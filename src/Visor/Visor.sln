@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Tenancy", "Visor.Tena
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A96D82A5-BFC3-4013-9FE4-37E339BE16E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Kernel", "Visor.Kernel\Visor.Kernel.csproj", "{D34E07A5-C219-42B6-BA45-5348DCCB1D26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visor.Kernel.Tests", "Visor.Kernel.Tests\Visor.Kernel.Tests.csproj", "{4E522074-9DC8-4F2D-B889-168E5079B85C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,9 +39,20 @@ Global
 		{BA2E5CB3-1B7A-42C3-8D21-96260C0151AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA2E5CB3-1B7A-42C3-8D21-96260C0151AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA2E5CB3-1B7A-42C3-8D21-96260C0151AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34E07A5-C219-42B6-BA45-5348DCCB1D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34E07A5-C219-42B6-BA45-5348DCCB1D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34E07A5-C219-42B6-BA45-5348DCCB1D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34E07A5-C219-42B6-BA45-5348DCCB1D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E522074-9DC8-4F2D-B889-168E5079B85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E522074-9DC8-4F2D-B889-168E5079B85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E522074-9DC8-4F2D-B889-168E5079B85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E522074-9DC8-4F2D-B889-168E5079B85C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E522074-9DC8-4F2D-B889-168E5079B85C} = {A96D82A5-BFC3-4013-9FE4-37E339BE16E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F214045E-2A06-4889-A5D7-58F24942D42F}
