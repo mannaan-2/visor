@@ -14,11 +14,11 @@ namespace Visor.Kernel.Registration
 {
     public class RegistrationManager : IRegistrationManager
     {
-        private readonly IUserRepository _userRepository;
+        private readonly ILoginProvider _userRepository;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<RegistrationManager> _logger;
 
-        public RegistrationManager(IUserRepository userRepository,IEmailSender emailSender, ILogger<RegistrationManager> logger)
+        public RegistrationManager(ILoginProvider userRepository,IEmailSender emailSender, ILogger<RegistrationManager> logger)
         {
             _userRepository = userRepository;
             _logger = logger;

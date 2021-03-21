@@ -17,6 +17,7 @@ namespace Visor.Kernel
             services.Configure<AuthMessageSenderOptions>(options => configuration.GetSection("Emails").Bind(options));
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IRegistrationManager, RegistrationManager>();
+            services.AddTransient<ILoginManager, LoginManager>();
         }
 
         public static IApplicationBuilder UseKernel(

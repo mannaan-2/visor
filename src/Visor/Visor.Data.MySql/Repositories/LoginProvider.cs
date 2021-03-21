@@ -12,12 +12,12 @@ using Visor.Data.MySql.Identity.Entities;
 
 namespace Visor.Data.MySql.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class LoginProvider: ILoginProvider
     {
         private readonly UserManager<ApplicationUser> _userManager;
         //private readonly ILogger<UserRepository> _logger;
 
-        public UserRepository(UserManager<ApplicationUser> userManager)
+        public LoginProvider(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
@@ -53,5 +53,6 @@ namespace Visor.Data.MySql.Repositories
             
             return user.Email;
         }
+       
     }
 }

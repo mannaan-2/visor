@@ -39,7 +39,9 @@ namespace Visor.Data.MySql.Utilities
             services.AddHttpContextAccessor();
             services.InitializeDefaultTenant(connectionString);
 
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ILoginProvider, LoginProvider>();
+            services.AddTransient<IAuthenticationProvider, AuthenticationProvider>();
+
             return services;
         }
         public static IApplicationBuilder UseTenantedMySqlIdentityProvider(

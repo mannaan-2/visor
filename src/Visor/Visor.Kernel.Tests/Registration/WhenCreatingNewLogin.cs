@@ -13,7 +13,7 @@ namespace Visor.Kernel.Tests
         [SetUp]
         public void Setup()
         {
-            var userRepo = new Mock<IUserRepository>();
+            var userRepo = new Mock<ILoginProvider>();
             userRepo.Setup(r => r.CreateLogin(
                 It.Is<string>(u=> u.Equals("")), 
                 It.Is<string>(u=>u.Equals("abc@example.com")), 
