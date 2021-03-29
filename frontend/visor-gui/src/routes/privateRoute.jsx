@@ -7,8 +7,10 @@ export const PrivateRoute = ({ component, ...rest }) => {
         <AuthConsumer>
             {({ isAuthenticated, signinRedirect }) => {
                 if (!!Component && isAuthenticated()) {
+                    debugger;
                     return <Component {...props} />;
                 } else {
+                    debugger;
                     signinRedirect();
                     return <span>loading</span>;
                 }

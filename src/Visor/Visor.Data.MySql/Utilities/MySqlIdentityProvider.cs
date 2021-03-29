@@ -111,7 +111,10 @@ namespace Visor.Data.MySql.Utilities
         {
 
             //// Adds IdentityServer
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                options.UserInteraction.LoginUrl = "/account/login"; //explore
+            })
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(IdentityServerConfig.Ids)
                 .AddInMemoryApiScopes(configuration.GetSection("IdentityServer:ApiScopes"))

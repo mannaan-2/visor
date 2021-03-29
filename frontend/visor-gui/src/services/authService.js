@@ -66,6 +66,7 @@ export default class AuthService {
 
 
     isAuthenticated = () => {
+        debugger;
         const oidcStorage = JSON.parse(sessionStorage.getItem(`oidc.user:${process.env.REACT_APP_AUTH_URL}:${process.env.REACT_APP_IDENTITY_CLIENT_ID}`))
 
         return (!!oidcStorage && !!oidcStorage.access_token)
